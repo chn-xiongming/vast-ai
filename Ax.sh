@@ -49,7 +49,7 @@ LORA_MODELS=(
 # 高质量 Flux dev 工作流（支持双/多 LoRA 加载）
 #WORKFLOW_URL="https://raw.githubusercontent.com/comfyanonymous/ComfyUI_examples/main/flux/flux_dev_fp8.json"  # 官方示例，改成你喜欢的
 # 或者社区高质量版（含 LoRA 示例）："https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/workflows/flux_dev_lora_example.json"
-WORKFLOW_URL="https://raw.githubusercontent.com/chn-xiongming/vast-ai/refs/heads/main/AutismMix.json"
+WORKFLOW_URL="https://raw.githubusercontent.com/chn-xiongming/vast-ai/refs/heads/main/Ax.json"
 
 # ==================== 以下不要修改 ====================
 
