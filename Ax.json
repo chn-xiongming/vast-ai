@@ -82,39 +82,6 @@
       ]
     },
     {
-      "id": 9,
-      "type": "VAELoader",
-      "pos": [
-        -227.25480699669177,
-        133.15953751829045
-      ],
-      "size": [
-        270,
-        58
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "links": [
-            18
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.11.1",
-        "Node name for S&R": "VAELoader"
-      },
-      "widgets_values": [
-        "AutismMix_vae.safetensors"
-      ]
-    },
-    {
       "id": 2,
       "type": "KSampler",
       "pos": [
@@ -165,59 +132,13 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        204555635371614,
+        162255609313357,
         "randomize",
         30,
         7,
         "euler",
         "karras",
         1
-      ]
-    },
-    {
-      "id": 1,
-      "type": "CheckpointLoaderSimple",
-      "pos": [
-        -404.08938430834866,
-        -235.688723536115
-      ],
-      "size": [
-        273.4576171875,
-        98
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            16
-          ]
-        },
-        {
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": [
-            4,
-            17
-          ]
-        },
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "links": []
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.11.1",
-        "Node name for S&R": "CheckpointLoaderSimple"
-      },
-      "widgets_values": [
-        "AutismMix_pony.safetensors"
       ]
     },
     {
@@ -326,6 +247,85 @@
       },
       "widgets_values": [
         "score_9, score_8_up, score_7_up, source_real, chinese new year"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "VAELoader",
+      "pos": [
+        -227.25480699669177,
+        133.15953751829045
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.11.1",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "sdxl_vae.safetensors"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -270.1759389098614,
+        -272.2646813095979
+      ],
+      "size": [
+        273.4576171875,
+        98
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            4,
+            17
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.11.1",
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "autismmixSDXL_autismmixPony.safetensors"
       ]
     }
   ],
