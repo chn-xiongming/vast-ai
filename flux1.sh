@@ -3,64 +3,59 @@
 source /venv/main/bin/activate
 COMFYUI_DIR=${WORKSPACE}/ComfyUI
 
-# ==================== 自定义部分 ====================
+# ==================== 自定义部分 - 质量优先 ====================
 
-# Token 设置说明（强烈推荐通过环境变量传入，避免硬编码）
-# 在 vast.ai 启动实例时，添加以下环境变量：
-#   HF_TOKEN=你的 huggingface read token
-#   CIVITAI_TOKEN=你的 civitai api key
-# 获取方式：
-#   HF: https://huggingface.co/settings/tokens
-#   Civitai: 登录 https://civitai.com → Account → API Keys → Create new key
-
-# 安装必要的自定义节点（可选，根据需要添加）
+# 安装必要的自定义节点
 NODES=(
-    "https://github.com/ltdrdata/ComfyUI-Manager"      
-    "https://github.com/XLabs-AI/x-flux-comfyui"                # FLUX 相关增强（可选但推荐）
-    "https://github.com/cubiq/ComfyUI_essentials"               # 常用基础节点
-    "https://github.com/cubiq/ComfyUI_IPAdapter_plus"           # IPAdapter 支持（人物/风格一致性）
-    "https://github.com/Mikubill/sd-webui-controlnet"           # ControlNet 支持（需配套模型）
-    "https://github.com/Fannovel16/comfyui_controlnet_aux"      # ControlNet 预处理器
-    "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"   # 视频相关节点（推荐）
-    "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet" # 高级 ControlNet
+    "https://github.com/ltdrdata/ComfyUI-Manager"                  # 节点管理器
+    "https://github.com/XLabs-AI/x-flux-comfyui"                   # Flux 增强节点（可选但推荐）
+    "https://github.com/cubiq/ComfyUI_essentials"                  # 基础节点
+    "https://github.com/cubiq/ComfyUI_IPAdapter_plus"              # IPAdapter（人物一致性）
+    "https://github.com/Mikubill/sd-webui-controlnet"              # ControlNet 支持
+    "https://github.com/Fannovel16/comfyui_controlnet_aux"         # ControlNet 预处理器
+    "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"      # 视频辅助（可选）
 )
 
 # Flux.1-schnell 相关模型（推荐 fp8 版本，显存友好）
 CHECKPOINT_MODELS=(
     # fp8 单文件版本（最推荐，开箱即用）
-    "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors"
+    #"https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors"
     # 如果想用原始完整版，可注释上面一行，启用下面
     # "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors"
 )
 
-# 如果使用原始 UNET 模式（非 checkpoint 单文件）
+# Flux.1-dev 模型（质量最高，非 schnell）
 UNET_MODELS=(
-    # "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors"
+    "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors"   # 原始版，质量最佳
+    # 或者 fp8 版（如果想稍省显存但质量接近）："https://huggingface.co/Comfy-Org/flux1-dev/resolve/main/flux1-dev-fp8.safetensors"
 )
 
 VAE_MODELS=(
-    "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors"
+    "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/ae.safetensors"
 )
 
 CLIP_MODELS=(
     "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors"
-    "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors"
-    # 显存紧张时可换 fp8 版 t5xxl（质量略降）
-    # "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors"
+    "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors"  # fp16 质量更好
 )
 
-# LoRA 示例（Civitai 下载会自动附加 token，如果需要登录）
-# 示例：NSFW MASTER FLUX、UltraRealistic 等（替换为实际模型 ID）
+# 最佳质量 LoRA 搭配（下载到 loras 目录）
 LORA_MODELS=(
-    # "https://civitai.com/api/download/models/667086"     # NSFW MASTER FLUX 示例
-    # "https://civitai.com/api/download/models/796382"     # UltraRealistic 示例
-    # "https://civitai.com/api/download/models/1157318"    # Photorealistic Skin 示例
+    # 1. Realism 主力（XLabs Realism - 皮肤、光影、细节顶级）
+    "https://huggingface.co/XLabs-AI/flux-RealismLora/resolve/main/lora.safetensors"   # 官方 XLabs Realism
+
+    # 2. NSFW / Uncensored 主力（NSFW MASTER 或 Nude Style）
+    "https://civitai.com/api/download/models/667086"   # NSFW MASTER FLUX (Civitai ID 667086, 替换为最新版ID如果更新)
+
+    # 3. 皮肤真实度提升（可选，但强烈推荐叠加）
+    "https://civitai.com/api/download/models/796382"   # UltraRealistic Lora Project - Flux v2
+    # 或者 Photorealistic Skin: "https://civitai.com/api/download/models/1157318"
 )
 
-# Flux Schnell 简单工作流 JSON（来自社区常用版本）
-WORKFLOW_URL="https://raw.githubusercontent.com/thinkdiffusion/ComfyUI-Workflows/main/flux/Flux-schnell-fp8.json"
-# 其他可选 workflow 来源
-# WORKFLOW_URL="https://raw.githubusercontent.com/comfyanonymous/ComfyUI_examples/main/flux/flux_schnell.json"
+# 高质量 Flux dev 工作流（支持双/多 LoRA 加载）
+#WORKFLOW_URL="https://raw.githubusercontent.com/comfyanonymous/ComfyUI_examples/main/flux/flux_dev_fp8.json"  # 官方示例，改成你喜欢的
+WORKFLOW_URL="https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/workflows/flux_dev_lora_example.json"
+# 或者社区高质量版（含 LoRA 示例）："https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/workflows/flux_dev_lora_example.json"
 
 # ==================== 以下不要修改 ====================
 
@@ -116,24 +111,30 @@ function provisioning_get_files() {
 
 function provisioning_get_workflow() {
     if [[ -n $WORKFLOW_URL ]]; then
-        echo "Downloading Flux Schnell default workflow..."
+        echo "Downloading high-quality Flux dev workflow..."
         mkdir -p "${COMFYUI_DIR}/user/default_workflows"
-        wget -qnc --show-progress "${WORKFLOW_URL}" -O "${COMFYUI_DIR}/user/default_workflows/flux-schnell-default.json"
-        echo "Workflow saved to ${COMFYUI_DIR}/user/default_workflows/flux-schnell-default.json"
+        wget -qnc --show-progress "${WORKFLOW_URL}" -O "${COMFYUI_DIR}/user/default_workflows/flux_dev_quality.json"
+        echo "Workflow saved to ${COMFYUI_DIR}/user/default_workflows/flux_dev_quality.json"
     fi
 }
 
 function provisioning_print_header() {
     printf "\n##############################################\n"
-    printf "#         Flux.1-schnell Provisioning         \n"
-    printf "#       This will take some time...          \n"
+    printf "#     Flux.1-dev + Best Quality LoRA Setup    \n"
+    printf "#     Quality First - Large Downloads Ahead   \n"
     printf "##############################################\n\n"
 }
 
 function provisioning_print_end() {
-    printf "\nFlux Schnell provisioning complete!\n"
-    printf "请启动 ComfyUI 后在菜单 -> Workflow -> Open (或直接拖入 json)\n"
-    printf "已支持 HF_TOKEN 和 CIVITAI_TOKEN 下载（环境变量传入）\n\n"
+    printf "\nProvisioning complete! High quality Flux dev + LoRA ready.\n"
+    printf "建议 workflow 使用方式：\n"
+    printf "1. Load UNET: flux1-dev.safetensors (或 fp8)\n"
+    printf "2. 加多个 Load LoRA 节点：\n"
+    printf "   - XLabs Realism @ 0.7-1.0\n"
+    printf "   - NSFW MASTER @ 0.8-1.1\n"
+    printf "   - UltraRealistic @ 0.6-0.9 (clip & model)\n"
+    printf "3. t5xxl prompt 用详细自然语言，clip_l 用标签\n"
+    printf "4. Steps 25-35, CFG 3.0-3.5, Sampler: Euler\n\n"
 }
 
 function provisioning_download() {
