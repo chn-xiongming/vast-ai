@@ -106,7 +106,7 @@ function provisioning_get_files() {
 function provisioning_get_workflow() {
     if [[ -n $WORKFLOW_URL ]]; then
         echo "Downloading high-quality Flux dev workflow..."
-        mkdir -p "${COMFYUI_DIR}/user/workflows"
+        mkdir -p "${COMFYUI_DIR}/user/default/workflows"
         wget -qnc --show-progress "${WORKFLOW_URL}" -O "${COMFYUI_DIR}/user/default/workflows/Ax.json"
         echo "Workflow saved to ${COMFYUI_DIR}/user/default/workflows/Ax.json"
     fi
