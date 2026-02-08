@@ -20,7 +20,7 @@ NODES=(
 # Flux Schnell 相关模型（推荐 fp8 版本，显存友好）
 CHECKPOINT_MODELS=(
     # fp8 单文件版本（最推荐，开箱即用）
-    #"https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors"
+    "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors"
 )
 
 # 或者用原始完整版（需要额外 CLIP + VAE，显存要求更高）
