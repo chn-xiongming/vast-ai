@@ -22,6 +22,7 @@ CHECKPOINT_MODELS=(
     #"https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors"
     # 如果想用原始完整版，可注释上面一行，启用下面
     # "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors"
+    "https://civitai.com/api/download/models/2625367?type=Model&format=SafeTensor&size=full&fp=fp16"
 )
 
 # Flux.1-dev 模型（质量最高，非 schnell）
@@ -112,9 +113,9 @@ function provisioning_get_files() {
 function provisioning_get_workflow() {
     if [[ -n $WORKFLOW_URL ]]; then
         echo "Downloading high-quality Flux dev workflow..."
-        mkdir -p "${COMFYUI_DIR}/user/default_workflows"
-        wget -qnc --show-progress "${WORKFLOW_URL}" -O "${COMFYUI_DIR}/user/default_workflows/flux_dev_quality.json"
-        echo "Workflow saved to ${COMFYUI_DIR}/user/default_workflows/flux_dev_quality.json"
+        mkdir -p "${COMFYUI_DIR}/user/default/workflows"
+        wget -qnc --show-progress "${WORKFLOW_URL}" -O "${COMFYUI_DIR}/user/default/workflows/Ax.json"
+        echo "Workflow saved to ${COMFYUI_DIR}/user/default/workflows/Ax.json"
     fi
 }
 
